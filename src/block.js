@@ -19,4 +19,4 @@ const calculateHash = R.curry((timestamp, data, previousHash) =>
 
 module.exports = {
   createBlock
-}
+};

@@ -1,6 +1,6 @@
-const block = require("./block");
+const {createBlock} = require("./block");
 
-let newBlock = block.createBlock(
+let newBlock = createBlock(
   {
     inputAddress: "abc123",
     outputAddress: "123abc",
