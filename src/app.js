@@ -1,4 +1,4 @@
-const {createBlock} = require("./block");
+const {createBlock, initializeGenesis} = require("./block");
 
 let newBlock = createBlock(
   {
@@ -10,4 +10,7 @@ let newBlock = createBlock(
   "pr3v10u5h45h"
 );
 
-console.log(newBlock);
+let genesis = initializeGenesis();
+
+//console.log(newBlock);
+console.log(genesis);
