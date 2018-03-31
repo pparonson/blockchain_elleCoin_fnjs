@@ -1,18 +1,18 @@
 const R = require("ramda");
 const SHA256 = require("crypto-js/sha256");
 
-const createBlock = R.curry((data, previousHash) => {
-  let timestamp = Date.now();
-  let hash = calculateHash(timestamp, data, previousHash);
-  
+// createBlock :: a -> String -> b
+const createBlock = R.curry((previousHash, data) => {
+  let hash = calculateHash(previousHash, data);
+
   return {
-    timestamp, 
-    data, 
+    data,
     previousHash,
     hash
   };
 });
 
+// initializeGenesis :: a
 const initializeGenesis = R.curry(() => {
   // elle is my princess
   let previousHash = "ecca2e3b7b6227f5b295cd63df2a86b0687d60eab210cee80cd48ab49932dca8";
@@ -22,15 +22,20 @@ const initializeGenesis = R.curry(() => {
     amount: 50,
     message: "The genesis of good."
   }
-  return createBlock(data, previousHash);
+  return createBlock(previousHash, data);
 });
 
-// impure: sha256 causes side effects?
-const calculateHash = R.curry((timestamp, data, previousHash) => 
-  SHA256(`${timestamp}${data}${previousHash}`).toString());
+// calculateHash :: a -> String -> String -> String -> String
+const calculateHash = R.curry((previousHash, data) =>
+  SHA256(`${previousHash}${data}`).toString());
+
+// isBlockValid :: a -> Boolean
+const isBlockValid = R.curry(block =>
+  block.hash === calculateHash(block.previousHash, block.data) ? true : false);
+
 
 module.exports = {
   createBlock,
-  initializeGenesis
+  initializeGenesis,
+  isBlockValid
 };
-

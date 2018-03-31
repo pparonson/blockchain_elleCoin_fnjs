@@ -1,6 +1,6 @@
 const {createBlock} = require("./block");
 
-describe("createBlock", () => {
+describe("Block", () => {
   // declare and set variables scope
   let data, previousHash, block;
 
